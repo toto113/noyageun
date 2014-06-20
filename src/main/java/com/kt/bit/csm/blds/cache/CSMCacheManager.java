@@ -29,7 +29,7 @@ public class CSMCacheManager {
      * @return
      */
     public static CSMCacheManager getInstance(){
-        if(instance != null){
+        if(instance == null){
             instance = new CSMCacheManager( "127.0.0.1", 6379);
         }
 
@@ -73,6 +73,13 @@ public class CSMCacheManager {
         this.port = port;
 
         pool = new JedisPool(new JedisPoolConfig(), this.host, this.port);
+        cacheTargetList = new HashMap();
+
+        /**
+         * @TO-DO : 설정 파일을 참조하여 구성하기
+         */
+        cacheTargetList.put("pr_personal_annual", new CachePolicy());
+        cacheTargetList.put("pr_personal_annual2", new CachePolicy());
     }
 
     /**
