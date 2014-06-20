@@ -30,7 +30,7 @@ public class CSMCacheManager {
      */
     public static CSMCacheManager getInstance(){
         if(instance != null){
-            instance = new CSMCacheManager( "127.0.0.1", 9999);
+            instance = new CSMCacheManager( "127.0.0.1", 6379);
         }
 
         return instance;

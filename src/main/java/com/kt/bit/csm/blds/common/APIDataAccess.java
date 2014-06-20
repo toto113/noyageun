@@ -24,6 +24,11 @@ public class APIDataAccess {
     private long                outgoingSequenceNo;
     private StringBuilder       sb = new StringBuilder();
 
+    public static void main(String[] args){
+        APIDataAccess ac = new APIDataAccess();
+        ac.testCachedResult(args[0], args[1]);
+    }
+
 
     public APIDataAccess() {
         if (this.dam == null) {
@@ -46,7 +51,7 @@ public class APIDataAccess {
     @return void
     @exception SDPException - Exception wrapped inside SDPException object
     **************************************************************************/
-    public void testCachedResult(long uid) {
+    public void testCachedResult(String year, String noOfEmployee) {
 
         /* DebugLog */
 //        SdpCommonLogUtil.addPayLoad("Input: Subscription ID=", String.valueOf(subscriptionID));
@@ -54,8 +59,8 @@ public class APIDataAccess {
 //        SdpCommonLogUtil.writeDebugLog("Start method loadSubscriptionInfoBySubscriptionID");
 
         String spName = "pr_personal_annual";
-        DAMParam[] param = { new DAMParam("year", "2014", OracleTypes.VARCHAR),
-                            new DAMParam("noOfEmployee", "1", OracleTypes.VARCHAR) };
+        DAMParam[] param = { new DAMParam("year", year, OracleTypes.VARCHAR),
+                            new DAMParam("noOfEmployee", noOfEmployee, OracleTypes.VARCHAR) };
         CSMResultSet rs = null;
 
         try {
@@ -70,10 +75,17 @@ public class APIDataAccess {
             //SdpCommonLogUtil.writeDebugLog(sb);
             System.out.println(sb);
 
-            if (rs.next()) {
+            while (rs.next()) {
 //                subscription = Subscription.Factory.newInstance();
 //                buildSubscription(rs, subscription, withOffer);
                 System.out.print(rs.getString(1));
+                System.out.print(rs.getString("NAME"));
+                System.out.print(rs.getString(3));
+                System.out.print(rs.getString(4));
+                System.out.print(rs.getString(5));
+                System.out.print(rs.getInt(6));
+                System.out.print(rs.getInt(7));
+                System.out.print(rs.getInt("ANNUAL_GAP"));
             }
         } catch (SDPException sdp) {
             sdp.printStackTrace();
